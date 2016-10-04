@@ -13,6 +13,8 @@ gem 'responders'
 gem 'boostrap-sass'
 gem 'faker'
 gem 'rack-cors', require: 'rack/cors'
+gem 'selenium-webdriver'
+gem 'fabrication'
 
 group :development, :test do
   gem 'byebug', platform: :mri
