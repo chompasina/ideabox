@@ -10,7 +10,7 @@ class Api::V1::IdeasController <ApplicationController
   end
   
   def create
-    respond_with :api, :v1, Idea.create(idea_params), location: nil
+    respond_with Idea.create(idea_params), location: nil
   end
   
   def update
