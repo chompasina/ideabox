@@ -9,15 +9,22 @@
   <body>
     <div class="container-fluid">
       <h1>Tommasina's IdeaBox</h1>
-      <%= render partial: "idea_form" %>
+      <!-- < % = render partial: "idea_form" %> -->
+      <div class="row">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+    <hr>
+    <div class="form-group">
+      <input class="form-control" type="text" id="idea-title", placeholder="Idea">
     </div>
-    
-    <link rel="stylesheet" href="assets/stylesheets/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/stylesheets/ideas.css" type="text/css" media="screen" title="no title" charset="utf-8">
-    <script src="assets/javascripts/jquery-2.1.4.min.js"></script>
-    <script src="assets/javascripts/bootstrap.min.js"></script>
-    <script src="assets/javascripts/ideas.js"></script>
-
-    
+    <div class="form-group">
+      <input class="form-control" type="text" id="idea-body", placeholder="Description">
+    </div>
+    <input class="btn btn-default pull-right" id="create-idea" type="button" name="submit" value="Create Idea">
+  </div>
+  <div class="col-sm-2"></div>
+</div>
+</div>
+    </div>
   </body>
 </html>
