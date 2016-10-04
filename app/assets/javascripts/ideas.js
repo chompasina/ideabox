@@ -6,8 +6,12 @@ function renderIdea(idea){
   $('#latest-ideas').append(
     "<div class='idea'><h6>Published on "+
     idea.created_at +
-    "</h6><p>" +
+    "</h6><p><em>" +
     idea.title +
+    "</em></p><p>" +
+    idea.body +
+    "</p><p>" +
+    idea.quality +
     "</p></div>"
   );
 }

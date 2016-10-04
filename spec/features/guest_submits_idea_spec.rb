@@ -7,7 +7,7 @@ describe "Guest submits an idea", :type => :feature, :js => true do
     fill_in "idea-title", :with => "Help students"
     fill_in "idea-body", :with => "Within our team"
     click_link_or_button "create-idea"
-    within('#ideas') do
+    within('#latest-ideas') do
       expect(page).to have_content("Help students")
       expect(page).to have_content("Within our team")
     end
