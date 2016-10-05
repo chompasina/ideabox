@@ -1,19 +1,47 @@
 $(document).ready(function(){
+  renderIdeaList();
   createIdea();
   });
+  
+function renderIdeaList(){
+  $.ajax({
+    type: 'GET',
+    url: 'api/v1/ideas',
+    dataType: 'JSON'
+  })
+  .then(collectIdeas);
+}
+
+function collectIdeas(ideaList){
+  ideaList.map(function(idea){
+    renderIdea(idea);
+  });
+}
 
 function renderIdea(idea){
-  $('#latest-ideas').append(
+  var shortBody = shortenBody(idea);
+  $('#latest-ideas').prepend(
     "<div class='idea'><h6>Published on "+
     idea.created_at +
     "</h6><p><em>" +
     idea.title +
     "</em></p><p>" +
-    idea.body +
+    shortBody +
     "</p><p>" +
     idea.quality +
     "</p></div>"
   );
+}
+
+
+function shortenBody(idea){
+  var count = 0;
+  var description = idea.body.split(' ');  
+  description.filter(function(word) {
+    count += word.length;
+    return count <= 100;
+  });
+  return description.join(' ');
 }
 
 function createIdea(){ 
