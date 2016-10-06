@@ -14,7 +14,10 @@ class Api::V1::IdeasController <ApplicationController
   end
   
   def update
+    # require "pry"; binding.pry
+    # if idea_params.include?('')
     respond_with Idea.update(params[:id], idea_params), location: nil
+  # end
   end
   
   def destroy
@@ -24,6 +27,6 @@ class Api::V1::IdeasController <ApplicationController
   private
   
     def idea_params
-      params.require(:idea).permit(:body, :title)
+      params.permit(:id, :body, :title, :quality)
     end
   end
