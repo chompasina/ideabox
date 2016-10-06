@@ -6,6 +6,7 @@ $(document).ready(function(){
   upvoteQuality();
   downvoteQuality();
   editTitle();
+  searchBar();
   });
   
 function renderIdeaList(){
@@ -49,6 +50,33 @@ function renderIdea(idea){
   );
 }
 
+function searchBar(){
+  $('.idea-search').on('keyup', function(e){
+    var $currentSearchTerm = this.value;
+    var $ideaList = $('#latest-ideas').children();
+    
+    $.each($ideaList, function(index, idea){
+      console.log($currentSearchTerm);
+      if ($(idea).find(".title-field").text().indexOf($currentSearchTerm) !== -1 || $(idea).find(".body-field").text().indexOf($currentSearchTerm) !== -1){
+        $(idea).show();
+      } else {
+        $(idea).hide();
+      }
+    });
+    // $.ajax({
+    //   url: 'api/v1/ideas',
+    // })
+    // .then(function(ideaList){
+    //   var filteredIdeas = ideaList.filter(function(element, index, array) {
+    //     // if (element.title =~ searchTerm || element.body =~ searchTerm) {
+    //     //   return true;
+    //     // }
+    //   });
+    //   collectIdeas(filteredIdeas);
+    });    
+  // });
+}
+
 function editTitle(){
   $('#latest-ideas').on('keypress', '.title-field', function(e) {
     if(e.which === 13){
@@ -65,7 +93,6 @@ function editTitle(){
     });
     $(this).blur();
     window.getSelection().removeAllRanges();
-
   }
   });
 }
