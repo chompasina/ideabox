@@ -1,0 +1,17 @@
+.upvote {
+  transition: transform .1s ease-in-out;
+}
+
+.downvote {
+  transition: all .1s ease-in-out;
+}
+
+.upvote:hover {
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+.downvote:hover {
+  cursor: pointer;
+  font-size: 1.2em;
+}

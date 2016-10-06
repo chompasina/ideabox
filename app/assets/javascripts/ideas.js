@@ -3,6 +3,8 @@ $(document).ready(function(){
   createIdea();
   clearFields();
   deleteIdea();
+  upvoteQuality();
+  downvoteQuality();
   });
   
 function renderIdeaList(){
@@ -36,18 +38,66 @@ function renderIdea(idea){
     idea.title +
     "</em></p><p>" +
     shortBody +
-    "</p><p>" +
+    "</p><p class='idea-quality'>" +
     idea.quality +
     "</p>" +
     "<button id='delete-idea' name='button-fetch' class='btn btn-default btn-xs'>Delete</button>" +
+    "<span class='upvote'> 👍 </span>" +
+    "<span class='downvote'> 👎 </span>" +
     "</div>"
   );
 }
 
+function upvoteQuality(){
+  $('#latest-ideas').on('click', '.upvote', function(){
+    var $idea = $(this).closest(".idea");
+    var $quality = $idea.find('.idea-quality');
+    if($quality.text() === 'plausible'){
+      $quality.text('genius');
+    }
+    if($quality.text() === 'swill'){
+      $quality.text('plausible');
+    }
+    var $updated = $idea.find('.idea-quality').text();
+    var updateParams = {
+        quality: $updated
+    };
+    
+    $.ajax({
+      type: 'PUT',
+      url: 'api/v1/ideas/' + $idea.data('id') + ".json",
+      data: updateParams
+    });
+  });
+}
+
+function downvoteQuality(){
+  $('#latest-ideas').on('click', '.downvote', function(){
+    var $idea = $(this).closest(".idea");
+    var $quality = $idea.find('.idea-quality');
+    if($quality.text() === 'plausible'){
+      $quality.text('swill');
+    }
+    if($quality.text() === 'genius'){
+      $quality.text('plausible');
+    }
+    var $updated = $idea.find('.idea-quality').text();
+    var updateParams = {
+        quality: $updated
+    };
+    
+    $.ajax({
+      type: 'PUT',
+      url: 'api/v1/ideas/' + $idea.data('id') + ".json",
+      data: updateParams
+    });
+  });
+}
+
+
 function deleteIdea(idea){
   $('#latest-ideas').on('click', '#delete-idea', function(){
     var $idea = $(this).closest(".idea");
-    
     $.ajax({
       type: 'DELETE',
       url: 'api/v1/ideas/' + $idea.data('id') + ".json"
