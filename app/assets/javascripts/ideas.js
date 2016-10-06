@@ -6,6 +6,7 @@ $(document).ready(function(){
   upvoteQuality();
   downvoteQuality();
   editTitle();
+  editBody();
   searchBar();
   });
   
@@ -64,7 +65,6 @@ function searchBar(){
       }
     });
     });    
-  // });
 }
 
 function editTitle(){
@@ -87,6 +87,25 @@ function editTitle(){
   });
 }
 
+function editBody(){
+  $('#latest-ideas').on('keypress', '.body-field', function(e) {
+    if(e.which === 13){
+      
+    var $idea = $(this).closest(".idea");
+    var $updated = $idea.find('.body-field').text();
+    var updateParams = {
+        title: $updated
+    };
+    $.ajax({
+      type: 'PUT',
+      url: 'api/v1/ideas/' + $idea.data('id') + ".json",
+      data: updateParams
+    });
+    $(this).blur();
+    window.getSelection().removeAllRanges();
+  }
+  });
+}
 
 function upvoteQuality(){
   $('#latest-ideas').on('click', '.upvote', function(){
