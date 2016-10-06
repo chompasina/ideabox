@@ -63,16 +63,6 @@ function searchBar(){
         $(idea).hide();
       }
     });
-    // $.ajax({
-    //   url: 'api/v1/ideas',
-    // })
-    // .then(function(ideaList){
-    //   var filteredIdeas = ideaList.filter(function(element, index, array) {
-    //     // if (element.title =~ searchTerm || element.body =~ searchTerm) {
-    //     //   return true;
-    //     // }
-    //   });
-    //   collectIdeas(filteredIdeas);
     });    
   // });
 }
@@ -174,10 +164,8 @@ function shortenBody(idea){
 function createIdea(){ 
   $("#create-idea").on('click',function(){
     var ideaParams = {
-      idea: {
         title: $("#idea-title").val(),
         body: $("#idea-body").val()
-      }
     };
   
   $.ajax({
