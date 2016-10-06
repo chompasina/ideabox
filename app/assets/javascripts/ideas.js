@@ -5,6 +5,8 @@ $(document).ready(function(){
   deleteIdea();
   upvoteQuality();
   downvoteQuality();
+  editTitle();
+  searchBar();
   });
   
 function renderIdeaList(){
@@ -34,9 +36,9 @@ function renderIdea(idea){
     idea.id + 
     "'><h6>Published on "+
     idea.created_at +
-    "</h6><p><em>" +
+    "</h6><p class='title-field' contenteditable='true'><em>" +
     idea.title +
-    "</em></p><p>" +
+    "</em></p><p class='body-field' contenteditable='true'>" +
     shortBody +
     "</p><p class='idea-quality'>" +
     idea.quality +
@@ -47,6 +49,54 @@ function renderIdea(idea){
     "</div>"
   );
 }
+
+function searchBar(){
+  $('.idea-search').on('keyup', function(e){
+    var $currentSearchTerm = this.value;
+    var $ideaList = $('#latest-ideas').children();
+    
+    $.each($ideaList, function(index, idea){
+      console.log($currentSearchTerm);
+      if ($(idea).find(".title-field").text().indexOf($currentSearchTerm) !== -1 || $(idea).find(".body-field").text().indexOf($currentSearchTerm) !== -1){
+        $(idea).show();
+      } else {
+        $(idea).hide();
+      }
+    });
+    // $.ajax({
+    //   url: 'api/v1/ideas',
+    // })
+    // .then(function(ideaList){
+    //   var filteredIdeas = ideaList.filter(function(element, index, array) {
+    //     // if (element.title =~ searchTerm || element.body =~ searchTerm) {
+    //     //   return true;
+    //     // }
+    //   });
+    //   collectIdeas(filteredIdeas);
+    });    
+  // });
+}
+
+function editTitle(){
+  $('#latest-ideas').on('keypress', '.title-field', function(e) {
+    if(e.which === 13){
+      
+    var $idea = $(this).closest(".idea");
+    var $updated = $idea.find('.title-field').text();
+    var updateParams = {
+        title: $updated
+    };
+    $.ajax({
+      type: 'PUT',
+      url: 'api/v1/ideas/' + $idea.data('id') + ".json",
+      data: updateParams
+    });
+    $(this).blur();
+    window.getSelection().removeAllRanges();
+  }
+  });
+}
+
 
 function upvoteQuality(){
   $('#latest-ideas').on('click', '.upvote', function(){
