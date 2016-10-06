@@ -1,6 +1,8 @@
 $(document).ready(function(){
   renderIdeaList();
   createIdea();
+  clearFields();
+  deleteIdea();
   });
   
 function renderIdeaList(){
@@ -18,10 +20,17 @@ function collectIdeas(ideaList){
   });
 }
 
+function clearFields() {
+  document.getElementById("idea-title").value = "";
+  document.getElementById("idea-body").value = "";
+}
+
 function renderIdea(idea){
   var shortBody = shortenBody(idea);
   $('#latest-ideas').prepend(
-    "<div class='idea'><h6>Published on "+
+    "<div class='idea' data-id='" +
+    idea.id + 
+    "'><h6>Published on "+
     idea.created_at +
     "</h6><p><em>" +
     idea.title +
@@ -29,10 +38,28 @@ function renderIdea(idea){
     shortBody +
     "</p><p>" +
     idea.quality +
-    "</p></div>"
+    "</p>" +
+    "<button id='delete-idea' name='button-fetch' class='btn btn-default btn-xs'>Delete</button>" +
+    "</div>"
   );
 }
 
+function deleteIdea(idea){
+  $('#latest-ideas').on('click', '#delete-idea', function(){
+    var $idea = $(this).closest(".idea");
+    
+    $.ajax({
+      type: 'DELETE',
+      url: 'api/v1/ideas/' + $idea.data('id') + ".json"
+    }).then(function(){
+      $idea.remove();
+    }).fail(handleError);
+  });
+}
+
+function handleError(xhr){
+  console.log(xhr.responseText);
+}
 
 function shortenBody(idea){
   var count = 0;
@@ -64,5 +91,6 @@ function createIdea(){
       console.log(xhr.responseText);
     }
   });
+  clearFields();
 });
 }
