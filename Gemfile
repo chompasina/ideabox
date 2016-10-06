@@ -15,6 +15,7 @@ gem 'faker'
 gem 'rack-cors', require: 'rack/cors'
 gem 'selenium-webdriver'
 gem 'fabrication'
+gem 'pry'
 
 group :development, :test do
   gem 'byebug', platform: :mri

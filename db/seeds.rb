@@ -14,7 +14,7 @@ class Seeder
   def build_ideas
     puts "Building ideas..."
     20.times do
-      idea = Idea.create!(title: Faker::Hipster.sentence(3), body: Faker::Hipster.sentences
+      idea = Idea.create!(title: Faker::Hipster.sentence(3), body: Faker::Hipster.sentence(3))
       puts "Idea #{idea.id} created."
     end
   end
