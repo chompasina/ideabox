@@ -5,6 +5,7 @@ $(document).ready(function(){
   deleteIdea();
   upvoteQuality();
   downvoteQuality();
+  editTitle();
   });
   
 function renderIdeaList(){
@@ -34,9 +35,9 @@ function renderIdea(idea){
     idea.id + 
     "'><h6>Published on "+
     idea.created_at +
-    "</h6><p><em>" +
+    "</h6><p class='title-field' contenteditable='true'><em>" +
     idea.title +
-    "</em></p><p>" +
+    "</em></p><p class='body-field' contenteditable='true'>" +
     shortBody +
     "</p><p class='idea-quality'>" +
     idea.quality +
@@ -47,6 +48,28 @@ function renderIdea(idea){
     "</div>"
   );
 }
+
+function editTitle(){
+  $('#latest-ideas').on('keypress', '.title-field', function(e) {
+    if(e.which === 13){
+      
+    var $idea = $(this).closest(".idea");
+    var $updated = $idea.find('.title-field').text();
+    var updateParams = {
+        title: $updated
+    };
+    $.ajax({
+      type: 'PUT',
+      url: 'api/v1/ideas/' + $idea.data('id') + ".json",
+      data: updateParams
+    });
+    $(this).blur();
+    window.getSelection().removeAllRanges();
+
+  }
+  });
+}
+
 
 function upvoteQuality(){
   $('#latest-ideas').on('click', '.upvote', function(){
