@@ -94,7 +94,7 @@ function editBody(){
     var $idea = $(this).closest(".idea");
     var $updated = $idea.find('.body-field').text();
     var updateParams = {
-        title: $updated
+        body: $updated
     };
     $.ajax({
       type: 'PUT',
