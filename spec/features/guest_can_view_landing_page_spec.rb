@@ -7,7 +7,7 @@ RSpec.feature "Guest can see landing page" do
     
     expect(page).to have_field("Idea")
     expect(page).to have_field("Description")
-    # expect(page).to have_field("Quality")
+    expect(page).to have_selector(".idea-quality")
   end
   
 end

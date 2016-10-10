@@ -7,6 +7,8 @@ $(document).ready(function(){
   downvoteQuality();
   editTitle();
   editBody();
+  editBodyOnClick();
+  editTitleOnClick();
   searchBar();
   });
   
@@ -85,6 +87,40 @@ function editTitle(){
     window.getSelection().removeAllRanges();
   }
   });
+}
+
+function editTitleOnClick(){
+  $('#latest-ideas').on('focusout', '.title-field', function(e){
+    var $idea = $(this).closest(".idea");
+    var $updated = $idea.find('.title-field').text();
+    var updateParams = {
+        title: $updated
+    };
+    $.ajax({
+      type: 'PUT',
+      url: 'api/v1/ideas/' + $idea.data('id') + ".json",
+      data: updateParams
+    });
+    $(this).blur();
+    window.getSelection().removeAllRanges();
+  });  
+}
+
+function editBodyOnClick(){
+  $('#latest-ideas').on('focusout', '.body-field', function(e){
+    var $idea = $(this).closest(".idea");
+    var $updated = $idea.find('.body-field').text();
+    var updateParams = {
+        body: $updated
+    };
+    $.ajax({
+      type: 'PUT',
+      url: 'api/v1/ideas/' + $idea.data('id') + ".json",
+      data: updateParams
+    });
+    $(this).blur();
+    window.getSelection().removeAllRanges();
+  });  
 }
 
 function editBody(){
